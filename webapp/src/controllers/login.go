@@ -3,18 +3,18 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"webapp/src/respostas"
 )
 
-// Chama a API para cadastrar umusuário no banco de dados
-func CriarUsuario(w http.ResponseWriter, r *http.Request) {
+// utiliza o e-mail e senha do usuário para autenticar na aplicação
+func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	usuario, erro := json.Marshal(map[string]string{
-		"nome":  r.FormValue("nome"),
 		"email": r.FormValue("email"),
-		"nick":  r.FormValue("nick"),
 		"senha": r.FormValue("senha"),
 	})
 
@@ -23,17 +23,13 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, erro := http.Post("http://localhost:5000/usuarios", "application/json", bytes.NewBuffer(usuario))
+	response, erro := http.Post("http://localhost:5000/login", "application/json", bytes.NewBuffer(usuario))
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
-	defer response.Body.Close()
 
-	if response.StatusCode >= 400 {
-		respostas.TratarStatusCodeDeErro(w, response)
-		return
-	}
+	token, _ := ioutil.ReadAll(response.Body)
 
-	respostas.JSON(w, response.StatusCode, nil)
+	fmt.Println(response.StatusCode, string(token))
 }

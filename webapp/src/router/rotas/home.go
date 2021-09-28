@@ -5,7 +5,7 @@ import (
 	"webapp/src/controllers"
 )
 
-var rotapaginaPrincipal = []Rota{
+var rotaPaginaPrincipal = []Rota{
 	{
 		URI:                "/home",
 		Metodo:             http.MethodGet,

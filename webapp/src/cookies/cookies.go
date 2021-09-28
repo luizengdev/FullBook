@@ -36,7 +36,7 @@ func Salvar(w http.ResponseWriter, ID, token string) error {
 	return nil
 }
 
-// Retorna os calores armazenados no cookie
+// Retorna os valores armazenados no cookie
 func Ler(r *http.Request) (map[string]string, error) {
 	cookie, erro := r.Cookie("dados")
 	if erro != nil {

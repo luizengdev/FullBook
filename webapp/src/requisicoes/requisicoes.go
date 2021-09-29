@@ -14,7 +14,7 @@ func FazerRequisicaoComAutenticacao(r *http.Request, metodo, url string, dados i
 	}
 
 	cookie, _ := cookies.Ler(r)
-	request.Header.Add("Authorization", "Bearer"+cookie["token"])
+	request.Header.Add("Authorization", "Bearer "+cookie["token"])
 
 	client := &http.Client{}
 	response, erro := client.Do(request)

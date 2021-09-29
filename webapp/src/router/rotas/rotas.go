@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Representa todas as rotas da Aplicação Web
+// Rota representa todas as rotas da Aplicação Web
 type Rota struct {
 	URI                string
 	Metodo             string

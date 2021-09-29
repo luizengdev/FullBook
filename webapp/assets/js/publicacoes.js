@@ -78,7 +78,7 @@ function descurtirPublicacao(evento) {
 }
 
 function atualizarPublicacao() {
-    $(this).prop('disabled', true);
+    $(this).prop('disabled', false);
 
     const publicacaoId = $(this).data('publicacao-id');
     

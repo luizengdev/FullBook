@@ -9,20 +9,17 @@ import (
 )
 
 var (
-	// Representa a URL para comunicação com a API
+	// APIURL representa a URL para comunicação com a API
 	APIURL = ""
-
-	// Porta onde a aplicação está rodando
+	// Porta onde a aplicação web está rodando
 	Porta = 0
-
-	// É utilizada para autenticar o cookie
+	// HashKey é utilizada para autenticar o cookie
 	HashKey []byte
-
-	// É utilizada para criptografar os dados do cookie
+	// BlockKey é utilizada para criptografar os dados do cookie
 	BlockKey []byte
 )
 
-// Inicializa as variáveis de ambiente
+// Carregar inicializa as variáveis de ambiente
 func Carregar() {
 	var erro error
 
@@ -38,4 +35,5 @@ func Carregar() {
 	APIURL = os.Getenv("API_URL")
 	HashKey = []byte(os.Getenv("HASH_KEY"))
 	BlockKey = []byte(os.Getenv("BLOCK_KEY"))
+
 }

@@ -2,6 +2,7 @@ package cookies
 
 import (
 	"net/http"
+	"time"
 	"webapp/src/config"
 
 	"github.com/gorilla/securecookie"
@@ -9,12 +10,12 @@ import (
 
 var s *securecookie.SecureCookie
 
-// utiliza as variáveis de ambiente para criação do SecureCookie
+// Configurar utiliza as variáveis de ambiente para a criação do SecureCookie
 func Configurar() {
 	s = securecookie.New(config.HashKey, config.BlockKey)
 }
 
-// Registra as informações de autenticação
+// Salvar registra as informações de autenticação
 func Salvar(w http.ResponseWriter, ID, token string) error {
 	dados := map[string]string{
 		"id":    ID,
@@ -36,7 +37,7 @@ func Salvar(w http.ResponseWriter, ID, token string) error {
 	return nil
 }
 
-// Retorna os valores armazenados no cookie
+// Ler retorna os valores armazenados no cookie
 func Ler(r *http.Request) (map[string]string, error) {
 	cookie, erro := r.Cookie("dados")
 	if erro != nil {
@@ -49,5 +50,15 @@ func Ler(r *http.Request) (map[string]string, error) {
 	}
 
 	return valores, nil
+}
 
+// Deletar remove os valores armazenados no cookie
+func Deletar(w http.ResponseWriter) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "dados",
+		Value:    "",
+		Path:     "/",
+		HttpOnly: true,
+		Expires:  time.Unix(0, 0),
+	})
 }
